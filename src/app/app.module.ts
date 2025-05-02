@@ -10,13 +10,13 @@ import { authInterceptorProviders, AuthInterceptor } from './interceptors/jwt-in
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 
-const routes: Routes = [
+/*const routes: Routes = [
   { path: 'login', component: LoginComponent },
   //{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' }
 ];
-
+*/
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +29,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     LoginComponent,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    AppRoutingModule
   ],
   providers: [
     authInterceptorProviders

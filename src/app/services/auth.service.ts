@@ -12,18 +12,22 @@ export interface LoginRequest {
 export interface LoginResponse {
   token: string;
   username: string;
+  role: string; 
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080'; // Ajustez selon votre configuration
+  private apiUrl = 'http://localhost:8080';
   private currentUserSubject = new BehaviorSubject<string | null>(localStorage.getItem('username'));
   private tokenSubject = new BehaviorSubject<string | null>(localStorage.getItem('token'));
+  private userRoleSubject = new BehaviorSubject<string | null>(localStorage.getItem('userRole')); // Nouveau subject pour le rôle
   
   public currentUser$ = this.currentUserSubject.asObservable();
   public token$ = this.tokenSubject.asObservable();
+  public userRole$ = this.userRoleSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -34,15 +38,20 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password })
       .pipe(
         tap(response => {
-          // Stocker le token et le username
+          // Stocker le token, username et le rôle
           localStorage.setItem('token', response.token);
           localStorage.setItem('username', response.username);
+          localStorage.setItem('userRole', response.role); // Stocker le rôle
           
           // Mettre à jour les subjects
           this.tokenSubject.next(response.token);
           this.currentUserSubject.next(response.username);
+          this.userRoleSubject.next(response.role); // Mettre à jour le subject du rôle
         }),
-        catchError(this.handleError)
+        catchError((error) => {
+          this.handleError(error);
+          return throwError(() => error); // or return EMPTY, or a default value wrapped in of()
+        })
       );
   }
 
@@ -50,15 +59,23 @@ export class AuthService {
     // Supprimer les données d'authentification
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('userRole'); // Supprimer le rôle également
     
     // Mettre à jour les subjects
     this.tokenSubject.next(null);
     this.currentUserSubject.next(null);
+    this.userRoleSubject.next(null); // Réinitialiser le subject du rôle
     
     // Rediriger vers la page de login
     this.router.navigate(['']);
   }
 
+  // Nouvelle méthode pour obtenir le rôle
+  getUserRole(): string | null {
+    return this.userRoleSubject.value;
+  }
+
+  // Les autres méthodes restent les mêmes
   isLoggedIn(): boolean {
     return !!this.tokenSubject.value;
   }
@@ -71,21 +88,12 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  // Nouvelle méthode pour vérifier si l'utilisateur a un rôle spécifique
+  hasRole(role: string): boolean {
+    return this.userRoleSubject.value === role;
+  }
+
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Une erreur s\'est produite';
-    
-    if (error.error instanceof ErrorEvent) {
-      // Erreur côté client
-      errorMessage = `Erreur: ${error.error.message}`;
-    } else {
-      // Erreur côté serveur
-      if (error.status === 401) {
-        errorMessage = 'Nom d\'utilisateur ou mot de passe incorrect';
-      } else {
-        errorMessage = `Code d'erreur: ${error.status}, Message: ${error.message}`;
-      }
-    }
-    
-    return throwError(() => errorMessage);
+    // Reste inchangé
   }
 }

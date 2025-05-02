@@ -2,10 +2,25 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { EtudiantEspaceComponent } from './etudiant/etudiant-espace/etudiant-espace.component';
 
 const routes: Routes = [
   { path: 'login', loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) 
-  }, ]//,
+  }, 
+  { 
+    path: 'admin-dashboard', 
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'ADMIN' }
+  },
+  { 
+    path: 'etudiant-espace', 
+    component: EtudiantEspaceComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'ETUDIANT' }
+  }]//,
   /*
   // Routes protégées par AuthGuard (nécessitent une authentification)
   { 

@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   
   // Initialiser directement le formulaire pour éviter les erreurs liées à undefined
@@ -32,35 +32,39 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    // Rediriger si déjà connecté
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']);
-    }
-  }
+
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      // Marquer tous les champs comme touchés pour afficher les erreurs
       this.loginForm.markAllAsTouched();
       return;
     }
-
+    
     this.loading = true;
     this.errorMessage = null;
-
     const { username, password } = this.loginForm.value;
-
+    
     this.authService.login(username, password)
       .subscribe({
-        next: () => {
-          this.router.navigate(['/dashboard']);
+        next: (response) => {
+          this.loading = false;
+          
+          // Utiliser directement le rôle de la réponse pour la redirection
+          console.log("Connexion réussie avec le rôle:", response.role);
+          
+          // Redirection basée sur le rôle
+          if (response.role === 'ADMIN') {
+            console.log("Redirection vers admin dashboard");
+            this.router.navigate(['/admin-dashboard']);
+          } else if (response.role === 'ETUDIANT') {
+            console.log("Redirection vers étudiant dashboard");
+            this.router.navigate(['/etudiant-espace']);
+          } 
+          
         },
         error: (error) => {
-          this.errorMessage = error;
-          this.loading = false;
-        },
-        complete: () => {
+          console.error("Erreur de connexion:", error);
+          this.errorMessage = "nom d'utilisateur ou mot de passe incorrect";
           this.loading = false;
         }
       });

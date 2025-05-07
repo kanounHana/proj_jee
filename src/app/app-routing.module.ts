@@ -7,48 +7,29 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { EtudiantEspaceComponent } from './etudiant/etudiant-espace/etudiant-espace.component';
 
 const routes: Routes = [
-  { path: 'login', loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) 
-  }, 
+  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { 
     path: 'admin-dashboard', 
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { role: 'ADMIN' }
+    data: { roles: ['ADMIN'] } // Modification ici
   },
   { 
     path: 'etudiant-espace', 
     component: EtudiantEspaceComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { role: 'ETUDIANT' }
-  }]//,
-  /*
-  // Routes protégées par AuthGuard (nécessitent une authentification)
-  { 
-    path: 'dashboard', 
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) 
+    data: { roles: ['ETUDIANT'] } // Modification ici
   },
   { 
-    path: 'rapport-stage', 
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./rapport-stage/rapport-stage.module').then(m => m.RapportStageModule) 
+    path: 'admin', 
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] },
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
-  { 
-    path: 'demande-stage', 
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./demande-stage/demande-stage.module').then(m => m.DemandeStageModule) 
-  },
-  { 
-    path: 'entreprises', 
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./entreprises/entreprises.module').then(m => m.EntreprisesModule) 
-  },
-  
-  // Redirection par défaut
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: '/dashboard' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirection par défaut
+  { path: '**', redirectTo: '/login' }
 ];
-*/
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

@@ -1,0 +1,59 @@
+<div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Gestion des offres de stage</h2>
+        <a routerLink="/admin/ajouter-offre" class="btn btn-success">
+          <i class="bi bi-plus-circle"></i> Nouvelle offre
+        </a>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isLoading" class="text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+        </div>
+  
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+  
+        <div *ngIf="!isLoading && offres.length === 0" class="alert alert-info">
+          Aucune offre de stage disponible. Commencez à en ajouter!
+        </div>
+  
+        <div *ngIf="!isLoading && offres.length > 0" class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Entreprise</th>
+                <th>Lieu</th>
+                <th>Période</th>
+                <th>Date de publication</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let offre of offres">
+                <td>{{ offre.titre }}</td>
+                <td>{{ offre.entreprise }}</td>
+                <td>{{ offre.lieu }}</td>
+                <td>{{ offre.periode }}</td>
+                <td>{{ offre.datePublication | date:'dd/MM/yyyy' }}</td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-sm btn-info" [routerLink]="['/admin/modifier-offre', offre.id]">
+                      <i class="bi bi-pencil"></i> Modifier
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="deleteOffre(offre.id!)">
+                      <i class="bi bi-trash"></i> Supprimer
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

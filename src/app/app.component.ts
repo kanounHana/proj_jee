@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Gestion des Stages';
+  title = 'Plateforme de Gestion des Stages';
   
   constructor(
     public authService: AuthService,
@@ -21,3 +21,4 @@ export class AppComponent {
     this.router.navigate(['/login']);
   }
 }
+

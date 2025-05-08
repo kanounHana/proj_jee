@@ -76,4 +76,9 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
+  // Méthode pour naviguer vers la page d'accueil
+  goToHomePage(): void {
+    this.router.navigate(['']);
+  }
 }

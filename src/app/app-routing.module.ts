@@ -5,9 +5,10 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { EtudiantEspaceComponent } from './etudiant/etudiant-espace/etudiant-espace.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { 
     path: 'admin-dashboard', 
@@ -27,8 +28,8 @@ const routes: Routes = [
     data: { roles: ['ADMIN'] },
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirection par défaut
-  { path: '**', redirectTo: '/login' }
+  //{ path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirection par défaut
+  //{ path: '**', redirectTo: '/login' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

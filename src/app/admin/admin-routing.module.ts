@@ -6,6 +6,7 @@ import { ListeOffresComponent } from './liste-offres/liste-offres.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserDeleteComponent } from './user-delete/user-delete.component';
 import { UserCreateComponent } from './user-form/user-form.component';
+import { RapportsEtudiantsComponent } from '../rapports/rapports-etudiants/rapports-etudiants.component';
 
 
 
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'liste-offres', component: ListeOffresComponent },
   {path: 'users', component: UsersListComponent},
   { path: 'users/delete/:id', component: UserDeleteComponent },
-  { path: 'users/new', component: UserCreateComponent}
+  { path: 'users/new', component: UserCreateComponent},
+  { path: 'rapports-etudiants', component: RapportsEtudiantsComponent },
 ];
 
 @NgModule({

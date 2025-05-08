@@ -1,0 +1,180 @@
+/* Style général */
+:host {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #e0f7e0, #88d8e0);
+    min-height: 100vh;
+  }
+  
+  /* Container principal du dashboard */
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 25px;
+  }
+  
+  /* Style du header */
+  .header {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .header h1 {
+    color: #555;
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  /* Style des boutons */
+  .btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+  }
+  
+  .btn-danger {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background-color: #ff5252;
+  }
+  
+  .btn-primary {
+    background-color: #5aabad;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #4a9799;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .btn-info {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .btn-info:hover {
+    background-color: #138496;
+  }
+  
+  /* Conteneur des statistiques */
+  .stats-container {
+    margin-bottom: 25px;
+  }
+  
+  .stats-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .stats-card h2 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  
+  .loading {
+    color: #666;
+    font-style: italic;
+  }
+  
+  .stats-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .stat-item {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .stat-label {
+    display: block;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #5aabad;
+  }
+  
+  /* Conteneur des actions */
+  .actions-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .actions-container h3 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  
+  .action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+  }
+  
+  .action-buttons a, 
+  .action-buttons button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 45px;
+    text-decoration: none;
+  }
+  
+  /* Media queries pour la responsivité */
+  @media (max-width: 768px) {
+    .dashboard-container {
+      padding: 15px;
+    }
+    
+    .action-buttons {
+      grid-template-columns: 1fr;
+    }
+    
+    .header {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .header h1 {
+      font-size: 20px;
+    }
+  }

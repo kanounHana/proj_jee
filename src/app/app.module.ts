@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { authInterceptorProviders, AuthInterceptor } from './interceptors/jwt-interceptor.service';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
+import { RapportsEtudiantsComponent } from './rapports/rapports-etudiants/rapports-etudiants.component';
+import { HomeComponent } from './home/home.component';
 
 /*const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +22,8 @@ import { LoginComponent } from './auth/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent
+    
     //LoginComponent
     //DashboardComponent
   ],
@@ -29,6 +33,7 @@ import { LoginComponent } from './auth/login/login.component';
     ReactiveFormsModule,
     LoginComponent,
     HttpClientModule,
+    RapportsEtudiantsComponent,
     AppRoutingModule
   ],
   providers: [

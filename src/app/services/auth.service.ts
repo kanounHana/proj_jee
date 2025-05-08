@@ -96,4 +96,6 @@ export class AuthService {
   private handleError(error: HttpErrorResponse) {
     // Reste inchangé
   }
+  // Déconnexion de l'utilisateur
+  
 }

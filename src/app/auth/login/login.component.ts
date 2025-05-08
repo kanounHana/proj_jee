@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -14,8 +14,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule
   ]
 })
-export class LoginComponent {
-
+export class LoginComponent implements OnInit {
   
   // Initialiser directement le formulaire pour éviter les erreurs liées à undefined
   loginForm: FormGroup = new FormGroup({
@@ -25,48 +24,56 @@ export class LoginComponent {
   
   loading = false;
   errorMessage: string | null = null;
+  returnUrl: string = '/';
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
-
+  ngOnInit(): void {
+    // Récupérer l'URL de retour des paramètres de requête ou utiliser '/' par défaut
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    
+    // Vérifier si l'utilisateur est déjà connecté
+    if (this.authService.isLoggedIn()) {
+      this.redirectBasedOnRole();
+      return;
+    }
+  }
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
-    
+  
     this.loading = true;
     this.errorMessage = null;
     const { username, password } = this.loginForm.value;
-    
-    this.authService.login(username, password)
-      .subscribe({
-        next: (response) => {
-          this.loading = false;
-          
-          // Utiliser directement le rôle de la réponse pour la redirection
-          console.log("Connexion réussie avec le rôle:", response.role);
-          
-          // Redirection basée sur le rôle
-          if (response.role === 'ADMIN') {
-            console.log("Redirection vers admin dashboard");
-            this.router.navigate(['/admin-dashboard']);
-          } else if (response.role === 'ETUDIANT') {
-            console.log("Redirection vers étudiant dashboard");
-            this.router.navigate(['/etudiant-espace']);
-          } 
-          
-        },
-        error: (error) => {
-          console.error("Erreur de connexion:", error);
-          this.errorMessage = "Nom d'utilisateur ou mot de passe incorrect";
-          this.loading = false;
-        }
-      });
+  
+    this.authService.login(username, password).subscribe({
+      next: () => {
+        this.redirectBasedOnRole();
+      },
+      error: (error) => {
+        this.loading = false;
+        this.errorMessage = 'Identifiants incorrects';
+      }
+    });
+  }
+  
+  private redirectBasedOnRole(): void {
+    const role = this.authService.getUserRole();
+  
+    if (role === 'ADMIN') {
+      this.router.navigate(['/admin']);
+    } else if (role === 'ETUDIANT') {
+      this.router.navigate(['/etudiant-espace']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

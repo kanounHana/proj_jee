@@ -1,1 +1,26 @@
-<p>etudiant-espace works!</p>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Espace Étudiant</h2>
+    </div>
+    <div class="card-body">
+      <div class="text-center mb-4">
+        <h3>Bienvenue dans votre espace étudiant!</h3>
+        <p class="lead">Consultez les offres de stage disponibles.</p>
+      </div>
+      
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="d-grid gap-3">
+            <button (click)="consulterOffres()" class="btn btn-primary btn-lg">
+              <i class="bi bi-search me-2"></i> Consulter les offres de stage
+            </button>
+            <button (click)="deconnexion()" class="btn btn-outline-danger btn-lg">
+              <i class="bi bi-box-arrow-right me-2"></i> Déconnexion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

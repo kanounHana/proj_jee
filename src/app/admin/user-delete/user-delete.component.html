@@ -1,0 +1,5 @@
+<button class="btn-delete" [disabled]="isDeleting" (click)="confirmDelete()">
+    <i class="fa fa-trash"></i>
+    <span *ngIf="!isDeleting">Supprimer</span>
+    <span *ngIf="isDeleting">Suppression...</span>
+  </button>

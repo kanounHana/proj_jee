@@ -8,24 +8,33 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AjouterOffreComponent } from './ajouter-offre/ajouter-offre.component';
 import { ListeOffresComponent } from './liste-offres/liste-offres.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { UsersListComponent } from './users-list/users-list.component';
+import { UserCreateComponent } from './user-form/user-form.component';
+import { UserDeleteComponent } from './user-delete/user-delete.component';
 
 @NgModule({
   declarations: [
     AdminDashboardComponent,
     AjouterOffreComponent,
     ListeOffresComponent
+    
+    
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    UsersListComponent,
+    UserCreateComponent,
+    UserDeleteComponent
+    
   ],
   exports: [
     AdminDashboardComponent,
     AjouterOffreComponent,
-    ListeOffresComponent
+    //ListeOffresComponent
   ]
 })
 export class AdminModule { }

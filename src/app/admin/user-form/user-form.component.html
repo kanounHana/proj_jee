@@ -1,0 +1,110 @@
+<!-- src/app/admin/user-create/user-create.component.html -->
+<div class="user-form-container">
+    <div class="form-header">
+      <h2>Créer un nouvel utilisateur</h2>
+      <button class="btn-back" (click)="cancel()">
+        <i class="fa fa-arrow-left"></i> Retour
+      </button>
+    </div>
+  
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+      <!-- Message d'erreur -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+        <button type="button" class="close-btn" (click)="errorMessage = null">&times;</button>
+      </div>
+  
+      <!-- Champ Nom d'utilisateur -->
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="username" 
+          formControlName="username" 
+          class="form-control"
+          [class.invalid]="f['username'].invalid && f['username'].touched"
+        >
+        <div class="error-message" *ngIf="f['username'].invalid && f['username'].touched">
+          <span *ngIf="f['username'].errors?.['required']">Le nom d'utilisateur est requis.</span>
+          <span *ngIf="f['username'].errors?.['minlength']">Le nom d'utilisateur doit contenir au moins 3 caractères.</span>
+        </div>
+      </div>
+  
+      <!-- Champ Email -->
+      <div class="form-group">
+        <label for="email">Email <span class="required">*</span></label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          class="form-control"
+          [class.invalid]="f['email'].invalid && f['email'].touched"
+        >
+        <div class="error-message" *ngIf="f['email'].invalid && f['email'].touched">
+          <span *ngIf="f['email'].errors?.['required']">L'email est requis.</span>
+          <span *ngIf="f['email'].errors?.['email']">Veuillez entrer un email valide.</span>
+        </div>
+      </div>
+  
+      <!-- Champ Mot de passe -->
+      <div class="form-group">
+        <label for="password">Mot de passe <span class="required">*</span></label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password" 
+          class="form-control"
+          [class.invalid]="f['password'].invalid && f['password'].touched"
+        >
+        <div class="error-message" *ngIf="f['password'].invalid && f['password'].touched">
+          <span *ngIf="f['password'].errors?.['required']">Le mot de passe est requis.</span>
+          <span *ngIf="f['password'].errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</span>
+        </div>
+      </div>
+  
+      <!-- Champ Confirmation du mot de passe -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirmer le mot de passe <span class="required">*</span></label>
+        <input 
+          type="password" 
+          id="confirmPassword" 
+          formControlName="confirmPassword" 
+          class="form-control"
+          [class.invalid]="(f['confirmPassword'].invalid || userForm.hasError('mismatch')) && f['confirmPassword'].touched"
+        >
+        <div class="error-message" *ngIf="(f['confirmPassword'].invalid || userForm.hasError('mismatch')) && f['confirmPassword'].touched">
+          <span *ngIf="f['confirmPassword'].errors?.['required']">La confirmation du mot de passe est requise.</span>
+          <span *ngIf="userForm.hasError('mismatch')">Les mots de passe ne correspondent pas.</span>
+        </div>
+      </div>
+  
+      <!-- Sélection du rôle -->
+      <div class="form-group">
+        <label for="role">Rôle <span class="required">*</span></label>
+        <select 
+          id="role" 
+          formControlName="role" 
+          class="form-control"
+          [class.invalid]="f['role'].invalid && f['role'].touched"
+        >
+          <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+        </select>
+        <div class="error-message" *ngIf="f['role'].invalid && f['role'].touched">
+          <span *ngIf="f['role'].errors?.['required']">Le rôle est requis.</span>
+        </div>
+      </div>
+  
+      <!-- Boutons d'action -->
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="cancel()">Annuler</button>
+        <button 
+          type="submit" 
+          class="btn-submit" 
+          [disabled]="isSubmitting"
+        >
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1"></span>
+          Créer l'utilisateur
+        </button>
+      </div>
+    </form>
+  </div>

@@ -1,0 +1,74 @@
+<!-- src/app/admin/users-list/users-list.component.html -->
+<div class="users-container">
+    <div class="header">
+      <h2 class="page-title">Gestion des Utilisateurs</h2>
+      <button  class="btn-add" (click)="addNewUser()">
+        <i class="fa fa-plus"></i> Ajouter un utilisateur
+      </button>
+    </div>
+  
+    <!-- Message de succès -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+      <button class="close-btn" (click)="successMessage = null">&times;</button>
+    </div>
+    
+    <!-- Message d'erreur -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+      <button class="close-btn" (click)="error = null">&times;</button>
+    </div>
+    
+    <!-- Indicateur de chargement -->
+    <div *ngIf="loading" class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Chargement des utilisateurs...</p>
+    </div>
+    
+    <!-- Tableau des utilisateurs -->
+    <div *ngIf="!loading && users.length > 0" class="table-responsive">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom_Utilisateur</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Date d'inscription</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users" [class.admin-row]="user.role === 'admin'" [class.student-row]="user.role === 'student'">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username}}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="role-badge" [class.admin-badge]="user.role === 'admin'" [class.student-badge]="user.role === 'student'">
+                {{ user.role === 'ADMIN' ? 'Administrateur' : 'Étudiant' }}
+              </span>
+            </td>
+            <td>{{ user.createdAt | date:'dd/MM/yyyy' }}</td>
+            <td class="actions-cell">
+              <button class="btn-edit" (click)="editUser(user.id)">
+                <i class="fa fa-pencil"></i> Modifier
+              </button>
+              <!-- Composant de suppression mis à jour avec le nouvel événement -->
+              <app-user-delete 
+                [userId]="user.id" 
+                (userDeleted)="handleUserDeleted($event)"
+                (deletionError)="handleDeletionError($event)"
+                (refreshRequest)="refreshUsersList()">
+              </app-user-delete>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Message si aucun utilisateur -->
+    <div *ngIf="!loading && users.length === 0" class="no-data">
+      <p>Aucun utilisateur trouvé dans la base de données.</p>
+      <button class="btn-primary" (click)="addNewUser()">Ajouter un utilisateur</button>
+    </div>
+  </div>

@@ -16,6 +16,10 @@ import { OffresStageComponent } from './offres-stage/offres-stage.component';
     FormsModule,
     EtudiantRoutingModule
   ],
+  exports: [
+    EtudiantEspaceComponent,
+    OffresStageComponent
+  ]
   
 })
 export class EtudiantModule { }

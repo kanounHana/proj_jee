@@ -18,7 +18,7 @@ export class UserCreateComponent implements OnInit {
   errorMessage: string | null = null;
   roles = [
     { value: 'ADMIN', label: 'Administrateur' },
-    { value: 'STUDENT', label: 'Étudiant' }
+    { value: 'ETUDIANT', label: 'Étudiant' }
   ];
 
   constructor(
@@ -37,7 +37,7 @@ export class UserCreateComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      role: ['STUDENT', Validators.required]
+      role: ['ADMIN', Validators.required]
     }, {
       validators: this.passwordMatchValidator
     });

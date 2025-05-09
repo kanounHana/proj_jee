@@ -1,0 +1,59 @@
+<div class="container mt-4">
+    <div class="offre-details-container">
+      <button class="btn-retour" (click)="retourListeOffres()">Retour aux offres</button>
+  
+      <div *ngIf="loading" class="loading">
+        Chargement des détails de l'offre...
+      </div>
+  
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+  
+      <div *ngIf="!loading && !error && offre" class="offre-details">
+        <h1>{{ offre.titre }}</h1>
+  
+        <div class="details-section">
+          <div class="detail-item">
+            <h3>Entreprise</h3>
+            <p>{{ offre.entreprise }}</p>
+          </div>
+  
+          <div class="detail-item">
+            <h3>Lieu</h3>
+            <p>{{ offre.lieu }}</p>
+          </div>
+  
+          <div class="detail-item">
+            <h3>Période</h3>
+            <p>{{ offre.periode }}</p>
+          </div>
+  
+          <div *ngIf="offre.remuneration" class="detail-item">
+            <h3>Rémunération</h3>
+            <p>{{ offre.remuneration }}</p>
+          </div>
+  
+          <div *ngIf="offre.datePublication" class="detail-item">
+            <h3>Date de publication</h3>
+            <p>{{ offre.datePublication | date:'dd/MM/yyyy' }}</p>
+          </div>
+        </div>
+  
+        <div class="description-section">
+          <h3>Description</h3>
+          <p class="description">{{ offre.description }}</p>
+        </div>
+  
+        <div class="competences-section">
+          <h3>Compétences requises</h3>
+          <p>{{ offre.competencesRequises }}</p>
+        </div>
+  
+        <div *ngIf="offre.lienExterne" class="lien-section">
+          <h3>Plus d'informations</h3>
+          <a [href]="offre.lienExterne" target="_blank" class="lien-externe">Voir l'offre sur le site de l'entreprise</a>
+        </div>
+      </div>
+    </div>
+  </div>

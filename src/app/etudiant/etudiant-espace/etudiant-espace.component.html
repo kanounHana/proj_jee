@@ -1,25 +1,33 @@
 <div class="container mt-5">
-  <div class="card">
-    <div class="card-header bg-primary text-white">
-      <h2 class="mb-0">Espace Étudiant</h2>
-    </div>
-    <div class="card-body">
-      <div class="text-center mb-4">
-        <h3>Bienvenue dans votre espace étudiant!</h3>
-        <p class="lead">Consultez les offres de stage disponibles.</p>
-      </div>
-      
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="d-grid gap-3">
-            <button (click)="consulterOffres()" class="btn btn-primary btn-lg">
-              <i class="bi bi-search me-2"></i> Consulter les offres de stage
-            </button>
-            <button (click)="deconnexion()" class="btn btn-outline-danger btn-lg">
-              <i class="bi bi-box-arrow-right me-2"></i> Déconnexion
-            </button>
-          </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h1 class="text-center mb-4">Espace Étudiant</h1>
+
+      <div class="card mb-4">
+        <div class="card-body text-center">
+          <h2 class="card-title">Bienvenue dans votre espace étudiant!</h2>
+          <p class="card-text">Gérez vos stages et rapports depuis cette interface.</p>
+          <button (click)="downloadPdf()">Télécharger le PDF</button>
         </div>
+      </div>
+
+      <!-- Composants alignés horizontalement -->
+      <div class="horizontal-components">
+        <div class="component-card">
+          <h3 class="component-title">Offres de stage</h3>
+          <p class="component-text">Consultez les offres de stage disponibles.</p>
+          <button class="btn btn-primary component-button" (click)="consulterOffres()">Consulter les offres</button>
+        </div>
+
+        <div class="component-card">
+          <h3 class="component-title">Rapports de stage</h3>
+          <p class="component-text">Déposez et consultez vos rapports de stage.</p>
+          <button class="btn btn-primary component-button" (click)="gererRapports()">Gérer mes rapports</button>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <button class="btn btn-secondary" (click)="deconnexion()">Déconnexion</button>
       </div>
     </div>
   </div>

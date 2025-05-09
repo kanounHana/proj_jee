@@ -1,0 +1,74 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Dépôt des rapports de stage</h2>
+      <button class="btn btn-outline-secondary" routerLink="/etudiant">
+        ← Retour à l'espace étudiant
+      </button>
+    </div>
+  
+    <!-- Formulaire de dépôt -->
+    <div class="card mb-4">
+      <div class="card-header">
+        Déposer un nouveau rapport
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="rapport" class="form-label">Sélectionner votre rapport (format PDF)</label>
+          <input type="file" 
+                 class="form-control" 
+                 id="rapport" 
+                 accept=".pdf" 
+                 (change)="onFileSelected($event)">
+          <div *ngIf="uploadError" class="text-danger mt-2">{{ uploadError }}</div>
+        </div>
+        <button 
+          [disabled]="!selectedFile || isLoading" 
+          class="btn btn-primary" 
+          (click)="deposerRapport()">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+          Déposer le rapport
+        </button>
+        <div *ngIf="uploadSuccess" class="alert alert-success mt-3">
+          Votre rapport a été déposé avec succès!
+        </div>
+      </div>
+    </div>
+  
+    <!-- Liste des rapports déposés -->
+    <div class="card">
+      <div class="card-header">
+        Mes rapports déposés
+      </div>
+      <div class="card-body">
+        <div *ngIf="mesRapports.length === 0" class="text-center text-muted">
+          Vous n'avez encore déposé aucun rapport.
+        </div>
+        <table *ngIf="mesRapports.length > 0" class="table">
+          <thead>
+            <tr>
+              <th>Nom du fichier</th>
+              <th>Date de dépôt</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rapport of mesRapports">
+              <td>{{ rapport.nomFichier }}</td>
+              <td>{{ rapport.dateDepot | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <button class="btn btn-sm btn-info" (click)="telechargerRapport(rapport.id)">
+                  Télécharger
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <button *ngIf="showScrollTop" 
+            (click)="scrollToTop()" 
+            class="btn-scroll-top">
+      ↑
+    </button>
+  </div>

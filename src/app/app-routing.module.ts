@@ -28,8 +28,13 @@ const routes: Routes = [
     data: { roles: ['ADMIN'] },
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
-  //{ path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirection par défaut
-  //{ path: '**', redirectTo: '/login' }
+  { 
+    path: 'etudiant', 
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ETUDIANT'] },
+    loadChildren: () => import('./etudiant/etudiant.module').then(m => m.EtudiantModule)
+  },
+ 
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,57 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OffreStageService, OffreStage } from '../../services/offre-stage.service';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-offres-stage',
   standalone:false,
   templateUrl: './offres-stage.component.html',
-  styleUrls: ['./offres-stage.component.scss']
+  styleUrls: ['./offres-stage.component.css']
 })
 export class OffresStageComponent implements OnInit {
   offres: OffreStage[] = [];
-  isLoading: boolean = true;
-  errorMessage: string = '';
+  loading: boolean = true;
+  error: string | null = null;
+  showScrollTop: boolean = false;
 
   constructor(
     private offreStageService: OffreStageService,
-    private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.chargerOffres();
   }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Afficher le bouton lorsque l'utilisateur descend de 300px
+    this.showScrollTop = window.pageYOffset > 300;
+  }
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   chargerOffres(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
+    this.loading = true;
+    this.error = null;
     
-    this.offreStageService.getAllOffres().subscribe({
+    this.offreStageService.getOffres().subscribe({
       next: (data) => {
         this.offres = data;
-        this.isLoading = false;
+        this.loading = false;
       },
-      error: (error) => {
-        this.errorMessage = 'Erreur lors du chargement des offres de stage. Veuillez réessayer.';
-        this.isLoading = false;
-        console.error('Erreur:', error);
+      error: (err) => {
+        console.error('Erreur lors du chargement des offres:', err);
+        this.error = 'Impossible de charger les offres de stage. Veuillez réessayer plus tard.';
+        this.loading = false;
       }
     });
   }
 
+  // Modifier la méthode pour qu'elle accepte un id potentiellement undefined
   voirDetails(id: number): void {
-    // Navigation vers la page de détails d'une offre
-    this.router.navigate(['/etudiant/offres', id]);
+    if (id !== undefined && id !== null && id !== 0) {
+      this.router.navigate(['/etudiant/offres', id]);
+    } else {
+      console.error('ID d\'offre invalide');
+      // Optionnel: Afficher un message d'erreur à l'utilisateur
+      this.error = 'Impossible d\'afficher les détails de cette offre.';
+    }
   }
 
-  retourEspaceEtudiant(): void {
+  retourEspace(): void {
     this.router.navigate(['/etudiant']);
-  }
-
-  deconnexion(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }

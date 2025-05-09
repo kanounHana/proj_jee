@@ -101,4 +101,8 @@ export class RapportStageComponent implements OnInit {
         }
       });
   }
+  onRapportSupprime(rapportId: number): void {
+    // Mettre à jour la liste des rapports en supprimant celui qui vient d'être effacé
+    this.mesRapports = this.mesRapports.filter(rapport => rapport.id !== rapportId);
+  }
 }

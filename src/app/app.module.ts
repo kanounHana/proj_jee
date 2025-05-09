@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RapportsEtudiantsComponent } from './rapports/rapports-etudiants/rapports-etudiants.component';
 import { HomeComponent } from './home/home.component';
+import { RapportDeleteComponent } from './rapport-delete/rapport-delete.component';
 
 /*const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +25,7 @@ import { HomeComponent } from './home/home.component';
     AppComponent,
     HomeComponent
     
+    
     //LoginComponent
     //DashboardComponent
   ],
@@ -34,7 +36,8 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     HttpClientModule,
     RapportsEtudiantsComponent,
-    AppRoutingModule
+    AppRoutingModule,
+    RapportDeleteComponent
   ],
   providers: [
     authInterceptorProviders

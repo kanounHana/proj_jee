@@ -56,9 +56,15 @@
               <td>{{ rapport.nomFichier }}</td>
               <td>{{ rapport.dateDepot | date:'dd/MM/yyyy' }}</td>
               <td>
-                <button class="btn btn-sm btn-info" (click)="telechargerRapport(rapport.id)">
-                  Télécharger
-                </button>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-info me-2" (click)="telechargerRapport(rapport.id)">
+                    Télécharger
+                  </button>
+                  <app-rapport-delete 
+                    [rapportId]="rapport.id" 
+                    (rapportSupprime)="onRapportSupprime($event)">
+                  </app-rapport-delete>
+                </div>
               </td>
             </tr>
           </tbody>

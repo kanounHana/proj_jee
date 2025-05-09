@@ -28,6 +28,14 @@ export class RapportStageService {
         catchError(this.handleError)
       );
   }
+
+  supprimerRapport(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/supprimer/${id}`, {
+      responseType: 'text'
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
   
 
   // Télécharger un rapport par son ID

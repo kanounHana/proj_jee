@@ -1,13 +1,15 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <h1 class="text-center mb-4">Espace Étudiant</h1>
-
+      <div class="header" style="display: flex; justify-content: space-between; align-items: center;"><h1 class="text-center mb-4">Espace Étudiant</h1>
+      <button class="btn btn-secondary" (click)="deconnexion()">Déconnexion</button></div>
+      
       <div class="card mb-4">
         <div class="card-body text-center">
           <h2 class="card-title">Bienvenue dans votre espace étudiant!</h2>
+          
           <p class="card-text">Gérez vos stages et rapports depuis cette interface.</p>
-          <button (click)="downloadPdf()">Télécharger le PDF</button>
+          <button class="btn btn-primary component-button" (click)="downloadPdf()">Télécharger votre Demande de Stage</button>
         </div>
       </div>
 
@@ -26,9 +28,7 @@
         </div>
       </div>
 
-      <div class="text-center mt-5">
-        <button class="btn btn-secondary" (click)="deconnexion()">Déconnexion</button>
-      </div>
+      
     </div>
   </div>
 </div>

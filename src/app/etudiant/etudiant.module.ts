@@ -6,6 +6,7 @@ import { EtudiantEspaceComponent } from './etudiant-espace/etudiant-espace.compo
 import { OffresStageComponent } from './offres-stage/offres-stage.component';
 import { OffreDetailsComponent } from './offre-details/offre-details.component';
 import { RapportStageComponent } from './rapport-stage/rapport-stage.component';
+import { RapportDeleteComponent } from '../rapport-delete/rapport-delete.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { RapportStageComponent } from './rapport-stage/rapport-stage.component';
   imports: [
     CommonModule,
     FormsModule,
-    EtudiantRoutingModule
+    EtudiantRoutingModule,
+    RapportDeleteComponent
   ],
   exports: [
     EtudiantEspaceComponent,

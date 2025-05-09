@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OffreStageService, OffreStage } from '../../services/offre-stage.service';
 import { AuthService } from '../../services/auth.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-offre-details',
@@ -13,12 +14,14 @@ export class OffreDetailsComponent implements OnInit {
   offre: OffreStage | null = null;
   loading: boolean = true;
   error: string | null = null;
+  safeLienExterne: SafeUrl | null = null;
   
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private offreStageService: OffreStageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +68,12 @@ export class OffreDetailsComponent implements OnInit {
       next: (data) => {
         console.log('Offre chargée avec succès:', data);
         this.offre = data;
+        
+        // Sécuriser l'URL externe si elle existe
+        if (this.offre && this.offre.lienExterne) {
+          this.safeLienExterne = this.sanitizer.bypassSecurityTrustUrl(this.offre.lienExterne);
+        }
+        
         this.loading = false;
       },
       error: (err) => {

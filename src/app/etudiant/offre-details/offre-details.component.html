@@ -50,10 +50,10 @@
           <p>{{ offre.competencesRequises }}</p>
         </div>
   
-        <div *ngIf="offre.lienExterne" class="lien-section">
-          <h3>Plus d'informations</h3>
-          <a [href]="offre.lienExterne" target="_blank" class="lien-externe">Voir l'offre sur le site de l'entreprise</a>
-        </div>
+        <div *ngIf="offre?.lienExterne" class="lien-section">
+        <h3>Plus d'informations</h3>
+        <a [href]="safeLienExterne" target="_blank" class="lien-externe">Voir l'offre sur le site de l'entreprise</a>
+      </div>
       </div>
     </div>
   </div>
